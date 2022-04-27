@@ -1,0 +1,1337 @@
+#include <bits/stdc++.h>
+#define ll long long
+#define MOD 1000000007
+#define maxN LLONG_MAX
+#define N 10000
+#define REL(i,n) for( ll i=0 ;i<n ; i++)
+#define RELO(i,n) for(ll i=1 ;i<=n ; i++)
+#define inarr(s,n,arr) for ( i = s; i < n; i++) cin>>arr[i];
+#define outarr(s,n,arr) for ( i = s; i < n; i++) cout<<arr[i];
+#define fast ios_base::sync_with_stdio(false),cin.tie(NULL),cout.tie(NULL);
+
+using namespace std;
+
+ll solve()
+{
+
+}
+
+int main()
+{
+	fast;
+	ll t;
+	cin>>t;
+	while(t--)
+	{
+		cout<<solve()<<"\n";
+	}
+	return 0;
+}
+
+
+---------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+-----------------------MIN HEAP--------------------------------------------------------------------
+  priority_queue<int, vector<int>, greater<int>>q;
+
+max Heap
+  priority_queue<pair<int,int>, vector<pair<int,int>>, cmp>q;
+
+cmp for Max heap;
+struct cmp {
+   int operator()(const pair<int,int> &p1, const pair<int,int> &p2) {
+       if (p1.first < p2.first) return true;
+       else if (p1.first > p2.first) return false;
+       else return (p1.second > p2.second) ? true : false;
+   }
+};
+
+----------------------------------------------------------------------------------------
+To check weather the array is sorted or not we can use 
+
+is_sorted(v.begin(),v.end());
+
+this method   
+
+---------------------------------------------------------------------------------------
+-------boolean format of recursion code  .Question Coloring a border(leetcode)---------
+--------------------------------------------------------------------------------------
+
+ bool func(vector<vector<int>>& v,int row,int col,int k,int m,int n)
+    {
+        if(row==m || col==n || row<0 ||col<0 || abs(v[row][col]) !=k )
+            return false;
+      if(v[row][col]<0)
+          return true;
+            v[row][col]=-k;
+
+       bool u=func(v,row-1,col,k,m,n);
+       bool d=func(v,row+1,col,k,m,n);
+       bool l=func(v,row,col-1,k,m,n);
+       bool r=func(v,row,col+1,k,m,n);  
+       if(u && d && l && r)
+           v[row][col]=k;
+        return true;
+    }
+       
+    vector<vector<int>> colorBorder(vector<vector<int>>& grid, int row, int col, int color) {
+        int m=grid.size();
+        int n=grid[0].size();
+        int k=grid[row][col];
+       bool y= func(grid,row,col,k,m,n);
+       for(int i=0;i<m;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                if(grid[i][j]<0)
+                    grid[i][j]=color;
+            }
+        }
+        return grid;
+    }
+-----------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------
+
+string functions
+
+s+='a';                  //push back a character to exting string
+s.append("Uday");	 // push back a string to existing string
+s.insert(2,"uday");	// insert a string a particular location in a existing string 
+s.substr(4,6);		// return a substring form 4th index of sixe 6
+
+-------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+To print all subsequence in given array
+
+
+ void helper(int i,vector<int>v,vector<int>v1,int &sum,int k)
+    {
+        if(i>=v.size())
+        {
+            for(int j=0;j<v1.size();j++)
+                cout<<v1[j]<<" ";
+            cout<<"\n";
+            return ;
+        }
+        v1.push_back(v[i]);  //to take
+        helper(i+1,v,v1,sum,k);
+        v1.pop_back();		//not to take
+       helper(i+1,v,v1,sum,k);
+       
+    }
+    bool printallSubsequence(vector<int>& v, int k) {
+        int n=v.size();
+        int sum=0;
+        vector<int>v1;
+        helper(0,v,v1,sum,k);
+        return false;
+    }
+
+-------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
+Knapsack question  to take it or not to take it
+// #include <bits/stdc++.h>
+int maxi=INT_MIN;
+int func(int i,vector<int> &wt,vector<int> &val, vector<vector<int>>&t, int maxWt)
+{
+    if(i==0)
+    {
+        if(maxWt>=wt[i])
+            return val[i];
+        else
+            return 0;
+    }
+    if(t[i][maxWt]!=-1)
+        return t[i][maxWt];
+ int l=INT_MIN;
+    if(maxWt>=wt[i]){
+     l=val[i]+func(i-1,wt,val,t,maxWt-wt[i]);
+    }
+    int r=func(i-1,wt,val,t,maxWt);
+   t[i][maxWt]=max(l,r); 
+    return max(l,r);
+}
+int knapsack(vector<int> weight, vector<int> value, int n, int maxWeight) 
+{
+    vector<vector<int>>t(1001,vector<int>(1001,-1));
+    for(int j=0;j<=maxweight;j++)
+    {
+        t[0][j]=val
+    }
+    for(int i=0;i<n;i++)
+    {
+        for(int j=0;j<=maxWeight;j++)
+        {
+            
+        }
+    }
+// 	return func(n-1,weight,value,t,maxWeight);
+}
+-----------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------
+Explanation of house rober question...
+
+int func(vector<int>&v,int i,int t[])
+    {
+        if(i==0)
+            return v[i];
+        if(i<0)
+            return 0;
+        if(t[i]!=-1)
+            return t[i];
+        int l=v[i]+func(v,i-2,t);  //here the func will give me the max sum from 0 to n-2
+        int r=func(v,i-1,t);	//here the func will give me the max sum from 0 to n-1
+        t[i]=max(l,r);
+        return max(l,r);
+    }
+    int rob(vector<int>& nums) {
+        int t[nums.size()+1];
+        for(int i=0;i<=nums.size();i++)
+            t[i]=-1;
+        return func(nums,nums.size()-1,t);
+    }
+-------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
+***Notes for map***
+
+1. m.erase(key) function will erase the key.
+
+2. We can compare two map (m1==m2).. this we return true only if m1 and m2 are exactly
+   equal,means key and value pair in m1 and m2 are same for value should be also same.
+
+3. For above condition will be true for ordered and unordered map both.
+
+-------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
+-----------Disjoint Set Union find----------------------------------------------------------------------------
+
+int prnt[202];
+    int r[202];
+    int find(int x)
+    {
+        if(prnt[x]==x)
+            return x;
+        return prnt[x]=find(prnt[x]);
+    }
+    void merge(int x,int y)
+    {
+        int lx=find(x);
+        int ly=find(y);
+        if(lx!=ly)
+        {
+            if(r[lx]>r[ly]){
+                prnt[ly]=lx;
+                r[lx]++;
+            }
+            else if(r[ly]>r[lx]){
+                prnt[lx]=ly;
+                r[ly]++;
+            }
+            else
+            {
+                prnt[ly]=lx;
+                r[lx]++;
+            }
+        }
+    }
+
+------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+Prefix sum and Hash concept to calculate the subarray sum...
+
+
+class Solution {
+public:
+    int subarraysDivByK(vector<int>& v, int k) {
+        int sum=0;
+        unordered_map<int,int>m;
+        int n=v.size(),ans=0;
+        m[sum]++;
+        for(int i=0;i<n;i++)
+        {
+            sum+=v[i];
+            int rem=sum%k;
+            if(rem<0)
+                rem+=k;
+            if(m.find(rem)!=m.end())
+                ans+=m[rem];
+            m[rem]++;
+        }
+        return ans;
+    }
+};
+-------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
+----------------Concept to get BST in inorder---------------------------------------------------------------------
+
+class BSTIterator {
+public:
+ 
+    stack<TreeNode*>st;
+  
+    BSTIterator(TreeNode* root) {
+         while(root!=NULL){
+           st.push(root);
+           root=root->left;
+       }
+    }
+    
+    int next() {
+        TreeNode *a=st.top();
+        st.pop();
+        TreeNode  *b=a;
+        b=a->right;
+        while(b!=NULL){
+            st.push(b);
+            b=b->left;
+          }
+        return a->val;
+    }
+    
+    bool hasNext() {
+        if(st.empty())
+            return false;
+        else
+            return true;
+    }
+};
+
+------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Two Dimensional Recursion (N-Queen Solution)
+
+ void func(int col,vector<string>&bd,int n)
+    {
+        if(col==n)
+        {
+            ans.push_back(bd);
+            return;
+        }
+        for(int row=0;row<n;row++)
+        {
+            if(isSaf(row,col,bd,n)){
+               bd[row][col]='Q';
+            func(col+1,bd,n);
+            bd[row][col]='.';
+            }
+        }
+    }
+
+---------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+Vertical Traversal of a Binary tree
+
+
+ vector<int> verticalOrder(Node *root)
+    {
+        queue<pair<Node*,int>>q;
+        vector<int>ans;
+        map<int,vector<int>>m;
+        if(root==NULL)
+            return ans;
+        q.push({root,0});
+        while(!q.empty())
+        {
+            int siz=q.size();
+            int vt;
+            while(siz--)
+            {
+                Node *a=q.front().first;
+                vt=q.front().second;
+                q.pop();
+                m[vt].push_back(a->data);
+                if(a->left!=NULL)
+                    q.push({a->left,vt-1});
+                if(a->right!=NULL)
+                    q.push({a->right,vt+1});
+            }
+        }
+        for(auto &ele:m)
+         ans.insert(ans.end(),ele.second.begin(),ele.second.end());
+        return ans;
+    }
+--------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+Maximum depth of Binary tree 
+
+int maxDepth(TreeNode* root) {
+       if(root==NULL)
+            return 0;
+        return max(maxDepth(root->left),maxDepth(root->right))+1;
+    }
+
+
+-------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+How to insert a vector inside a vector
+
+vector<int>v1{1,2,3,4};
+vector<int>v2{5,6,7,8,9};
+
+syntax;-
+v1.insert(v1.end(),v2.begin(),v2.end());
+
+o/p of v1 :- 1,2,3,4,5,6,7,8,9
+
+------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
+To find two valid majority element in an array 
+
+ int val1=v[0];
+            int val2=1;
+            int cnt1=1;
+            int cnt2=0;
+            for(int i=1;i<n;i++)
+            {
+                if(val1==v[i])
+                    cnt1++;
+                else if(val2==v[i])
+                    cnt2++;
+                else
+                {
+                    if(cnt1==0){
+                        val1=v[i];
+                        cnt1=1;
+                    }
+                  else if(cnt2==0){
+                        val2=v[i];
+                        cnt2=1;
+                    }
+                    else{
+                    cnt1--;
+                    cnt2--;
+                    }
+                }
+            }
+
+
+
+
+------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------
+
+
+
+JSX to access array objects we use map
+
+people.map((person) => {
+        const { id, name } = person;
+        return (
+          <div key={id} className="item">
+            <h4>{name}</h4>
+          </div>
+        );
+      })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-------------------------------------------------------------------
+--------------------------------------------------------------------
+----------------------------------------------------------------------
+Priority_queue (SYNTAX)
+
+for(i=0;i<n;i++)
+{
+	q.push(v[i]);
+	if(q.size()>k)
+		q.pop();
+}
+
+-----------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+shortcut to convert binary t decimal
+
+int num=stoi(bin_string,0,2);
+
+
+--------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
+
+-------To sort map in desendig order---------------------
+   map<int,int,greater<int>>mp;
+   memset(arr, 0, sizeof(arr));
+-----------------------------------------
+
+SORT ARRAY IN DECENDING ORDER-------------
+
+sort(arr, arr + n, greater<int>());
+---------------------------------------------------
+
+prefix summ a[r]-a[l-1];
+
+*********************************************************************
+1.To convert Interger to string use  to_string(num);
+2.To convert string into Long long int use stoll(string);
+************************************************************************
+
+
+
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+----------------------------------------------------------------------------
+
+
+
+
+int find(int A[],int x)
+{
+    if(A[x]==x)
+        return x;
+    int temp=find(A,A[x]);
+    return temp;
+}
+void unionSet(int A[],int X,int Z)
+{
+	int lx=find(A,X);
+	int lz=find(A,Z);
+	A[lx]=lz;
+}
+
+
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+
+-----------------------------------------------------------------------------
+****************************************************************************
+Function to get all the substring ...
+
+	for(i=0;i<n;i++)
+	{
+		for(j=i+1;j<=n;j++)
+		{
+			string s=st.substr(i,j);
+		}
+	}
+
+*******************************************************************************
+--------------------------------------------------------------------------------
+//imp	for(i=0;i<n;i++)
+	{
+	    cin>>a[i];
+	    sum=sum+a[i];
+	    sum=((sum%mod)+mod)%mod;
+	}
+imp//
+***************************************************************************
+------------Modular opertion------------------------------
+ll mod(ll x){
+	return (x%MOD +MOD)%MOD;
+}
+
+ll mul(ll a,ll b){
+	return mod(mod(a)*mod(b));
+}
+
+ll add(ll a,ll b){
+	return mod(mod(a)+mod(b));
+}
+-----------------------------------------------------------------
+*************************************************************************
+
+
+
+
+------// TO find subset BIt MINPULATION  //---------
+int main() {
+    int n ;
+    cin>>n;
+    int a[n];
+    for(int i=0;i<n;i++)
+    {
+        cin>>a[i];
+    }
+    int tot=1<<n;
+    for(int k=1;k<tot;k++)
+    {
+        for(int i=0;i<n;i++)
+        {
+            if(k&(1<<i))
+                cout<<a[i]<<" ";
+        }
+        cout<<"\n";
+    }
+            return 0;
+}
+------------------*********--------------
+
+
+
+
+
+
+/--*greedy algorithm *--/
+
+
+#include <bits/stdc++.h>
+#define ll long long
+using namespace std;
+ll cmp1(pair<ll,ll>a,pair<ll,ll>b)
+{
+    return a.second<b.second;
+
+}
+ll uday()
+{
+        ll n,x,c,i,d,e;
+    	unordered_map<ll,ll>m;
+    	cin>>n>>x;
+    	for(i=0;i<n;i++)
+    	{
+    	    cin>>c;
+    	    auto res=m.find(c);
+    	    if(res!=m.end())
+    	        res->second+=1;
+    	   else
+    	   {
+    	        pair<ll,ll> p(c,1);
+    	        m.insert(p);
+    	   }
+    	}
+    	ll cnt=0;
+    for(auto &ele:m)
+    	{
+    	     if(ele.second>0)
+             {
+                 d=ele.second;
+                 d=d-1;
+                 cnt=cnt+d;
+             }
+    	    if(cnt>=x)
+    	        break;
+    	}
+    	ll cntt=0;
+    	for(auto &ele:m)
+    	{
+    	   if(ele.second>0)
+    	    cntt++;
+    	}
+    	if(cnt<x)
+        {
+            while(cnt!=x)
+            {
+                cntt--;
+                cnt++;
+            }
+        }
+    	return cntt;
+}
+int main() {
+    ll t;
+    cin>>t;
+    while(t--)
+    {
+       cout<<uday()<<"\n";
+    }
+	return 0;
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+**********Binary Xponentiation************************************************************************************
+
+ll power( ll base, ll power)
+{
+	base=base%MOD;
+    ll res=1;
+    while(power!=0)
+    {
+        if(power%2==0)
+        {
+            power/=2;
+            base=(base*base)%MOD;
+        }
+        else{
+            power--;
+            res=(res*base)%MOD;
+        }
+    }
+    return res;
+}
+***********************************************************************************************************************
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+************GCD of number*****************************
+-----------------------------------------------------------------
+ll GCD(ll a,ll b){
+    if(b==0)
+        return a;
+    GCD(b,a%b);
+}
+*********************************************************
+-----------------------------------------------------------------------
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+**********Modular Xponentiation****************
+
+
+ll I[N][N];
+ll ar[N][N];
+void multi(ll A[][N], ll B[][N], ll dim )
+{
+    ll res[dim+1][dim+1];
+        RELO(i,dim)
+            RELO(j,dim){
+                res[i][j]=0;
+                    RELO(k,dim)
+                        res[i][j]+=A[i][k]*B[k][j];
+        }
+    RELO(i,dim)
+        RELO(j,dim)
+            A[i][j]=res[i][j];
+}
+void matpower( ll ar[][N] , ll p, ll dim)
+{
+    ll i,j;
+
+    RELO(i,dim)
+        RELO(j,dim){
+            if(i==j) {I[i][j]=1;}
+            else {I[i][j]=0;}
+        }
+    while(p!=0)
+    {
+        if(p%2==0){
+            p/=2;
+            multi(ar,ar,dim);
+        }else{
+            p--;
+            multi(I,ar,dim);
+        }
+    }
+
+
+    RELO(i,dim)
+    {
+        RELO(j,dim) {cout<<I[i][j]<<" ";}
+        cout<<"\n";
+    }
+}
+
+******************************************************************************************************
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+**************Modular Exponential***************
+**************To calculate power in optimal way***********************
+
+
+int uday(ll x,unsigned int y,int p)
+{
+  int res=1;
+  x=x%p;
+  if(x==0)
+    return 0;
+    while(y>0)
+    {
+        if(y&1)
+            res=(res*x)%p;
+        y=y>>1;
+        x=(x*x)%p;
+    }
+    return res;
+}
+************************************************************************************************
+------------------------------------------------------------------------------------------------------------------------------
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+********************SIEVE**********************
+
+ll prime[N];
+void sieve()
+{
+    REL(i,N){
+        prime[i]=1;
+        prime[0]=prime[1]=0;
+    }
+    for(ll i=2;i*i<=N;i++)
+    {
+        if(prime[i]==1)
+        {
+            for(ll j=i*i;j<=N;j+=i)
+                prime[j]=0;
+        }
+    }
+}
+
+**************************************************
+--------------------------------------------------------------------------
+---------Frequency of element----Optimal-------
+
+unordered_map< int, vector<int> > store;
+
+// Returns frequency of element in arr[left-1..right-1]
+int findFrequency(int left,int right, int element)
+{
+    // Find the position of first occurrence of element
+    int a = lower_bound(store[element].begin(),
+                        store[element].end(),
+                        left)
+            - store[element].begin();
+
+    // Find the position of last occurrence of element
+    int b = upper_bound(store[element].begin(),
+                        store[element].end(),
+                        right)
+            - store[element].begin();
+
+    return b-a;
+}
+
+
+---------------------------------------------------
+*************************************************************************
+--------**********************Binary Search******************************---
+ll bin_search(ll a[],ll n)
+{
+	ll i=0;
+   ll j=9;
+   ll res=-1;
+    while(i<=j){
+           ll mid=i+(j-i)/2;
+        if(n==a[mid]){
+	return mid;
+       }
+        else if(n>=a[mid]){
+            i=mid+1;
+        }
+        else
+            j=mid-1;
+    }
+    return -1;
+}
+
+
+ll right_occr(ll a[],ll n){
+   ll i=0;
+   ll j=9;
+   ll res=-1;
+    while(i<=j){
+           ll mid=i+(j-i)/2;
+        if(n==a[mid]){
+            res=mid;
+            i=mid+1;
+        }
+        else if(n>a[mid]){
+            i=mid+1;
+        }
+        else
+            j=mid-1;
+    }
+    return res;
+}
+
+
+ll left_occr(ll a[],ll n){
+   ll i=0;
+   ll j=9;
+   ll res=-1;
+    while(i<=j){
+           ll mid=i+(j-i)/2;
+        if(n==a[mid]){
+            res=mid;
+            j=mid-1;
+        }
+        else if(n>a[mid]){
+            i=mid+1;
+        }
+        else
+            j=mid-1;
+    }
+    return res;
+}
+***********To return element just greater than key eles return -1 if found***********
+-------------------------------------------------------------------------
+ll bin_search(ll a[],ll i,ll j,ll key)
+{
+    while(i<=j){
+        ll mid=i+(j-i)/2;
+        if(key==a[mid]){
+	        return -1;
+       }
+        else if(key>a[mid]){
+            i=mid+1;
+        }
+        else
+            j=mid-1;
+    }
+    return i;
+}
+
+
+
+***********To return element just less than key eles return -1 if found***********
+-------------------------------------------------------------------------
+ll bin_search(ll a[],ll i,ll j,ll key)
+{
+    while(i<=j){
+        ll mid=i+(j-i)/2;
+        if(key==a[mid]){
+	        return -1;
+       }
+        else if(key>a[mid]){
+            i=mid+1;
+        }
+        else
+            j=mid-1;
+    }
+    return j;
+}
+
+********************************************************************************
+-------------------------------------------------------------------------------
+*********************Count number of subset of given sum**********************
+--------------------------------------------------------------------------------
+  int findTargetSumWays(vector<int>& nums, int target) {
+        int i,j,sum=0,cnt=0;
+        for(i=0;i<nums.size();i++){
+            if(nums[i]==0)
+                cnt++;
+            sum+=nums[i];
+        }
+        if(target>sum || (sum + target) % 2 != 0)
+            return 0;
+        int sum1=(sum+target)/2;
+        int  t[nums.size()+1][sum1+1];
+        for(i=0;i<sum1+1;i++){
+            t[0][i]=0;
+        }
+        for(i=0;i<nums.size()+1;i++){
+            t[i][0]=1;
+        }
+        for(i=1;i<nums.size()+1;i++){
+            for(j=1;j<sum1+1;j++){
+                if(nums[i-1]==0)
+                    t[i][j]=t[i-1][j];
+                else if(nums[i-1]>j)
+                  t[i][j]=t[i-1][j];
+                else 
+                 t[i][j] = t[i-1][j]+t[i-1][j-nums[i-1]];
+
+            }
+        }
+       return pow(2,cnt) * t[nums.size()][sum1] ;  
+    }
+----------------------------------------------------------------------------
+*****************************************************************************
+
+****************Insertion SORT*********************************************
+---------------------------------------------------------------------
+ REL(i,n){
+        cin>>a[i];
+    }
+    for(i=1;i<n;i++){
+        k=i;
+            if(a[i-1]>a[i]){
+                while(a[k-1]>a[k] && k>=1)
+                {
+                   tmp=a[k];
+                    a[k]=a[k-1];
+                    a[k-1]=tmp;
+                    k--;
+                }
+            }
+            REL(c,n){
+                cout<<a[c]<<" ";
+            }
+            cout<<"\n";
+        }
+**************************************************************************
+
+*****DFS*****************
+------------------------DEPTH FIRST SEARCH---------------------
+
+
+vector<ll>ar[1000];
+ll vis[1000]={0};
+
+
+void dfs(ll v){
+    vis[v]=1;
+    cout<<v;
+    for(ll i=0;i<ar[v].size();i++){
+        if(vis[ar[v][i]]==0)
+            dfs(ar[v][i]);
+    }
+}
+------------------------------------------------
+************************************************
+	_*_*_*_	CONCEPT_*_*_*_*
+
+
+#include <bits/stdc++.h>
+#define ll long long
+#define MOD 1000000007
+#define maxN LLONG_MAX
+#define N 10000
+#define REL(i,n) for( ll i=0 ;i<n ; i++)
+#define RELO(i,n) for(ll i=1 ;i<=n ; i++)
+#define inarr(s,n,arr) for ( i = s; i < n; i++) cin>>arr[i];
+#define outarr(s,n,arr) for ( i = s; i < n; i++) cout<<arr[i];
+#define fast ios_base::sync_with_stdio(false),cin.tie(NULL),cout.tie(NULL);
+
+using namespace std;
+
+ll uday()
+{
+    ll n;
+    cin>>n;
+    ll a[n];
+    REL(i,n){
+        cin>>a[i];
+    }
+    ll low[n],hig[n];
+    ll maxil,maxih;
+    maxil=a[0];
+    maxih=a[n-1];
+    for(i=0,j=n-1;i<n;i++,j--)
+    {
+        if(a[i]>maxil)
+        {
+            maxil=a[i];
+            low[i]=maxil;
+        }
+        if(a[j]>maxih){
+            maxih=a[j];
+            hig[j]=maxih;
+        }
+    }
+    for(i=1;i)
+}
+
+int main()
+{
+    fast;
+    ll t;
+    cin>>t;
+    while(t--)
+    {
+        cout<<uday()<<"\n";
+    }
+    return 0;
+}
+
+
+
+_________________________________________________________________________
+*************************BFS TRAVERSAL******************************************
+
+vector<ll>v[10001];
+ll vis[100001]={0};
+void bfs(ll a)
+{
+    vis[a]=1;
+    queue<ll>q;
+    q.push(a);
+    cout<<a<<" ";
+    while(!q.empty()){
+        ll tmp=q.front();
+        q.pop();
+        for(ll child : v[tmp])
+        {
+            if(vis[child]==0)
+            {
+                vis[child]=1;
+                q.push(child);
+                cout<<child<<" ";
+            }
+        }
+    }
+}
+---------------------------------------------------------------------
+*********************************************************************
+
+
+---------------SLIDING ALGORITHM--------------------------------------
+*******************************************************************
+
+	    int ans=0;
+	    i=0,j=0;
+	    cnt=t.size();
+	    
+	    while(j<txt.size())
+	    {
+		/// initial calculation 
+	        if(t.find(txt[j])!=t.end())
+	        {
+	            t[txt[j]]--;
+	            if(t[txt[j]]==0)
+	            cnt--;
+	        }
+
+
+		// Incrementing j till the window size is not reached
+	        if(j-i+1<pat.size())
+	            j++;
+
+
+		// performing operation when size is reached
+			such that the window size()is maintained//
+	       else if(j-i+1==pat.size())
+	       {
+	           if(cnt==0)
+	                ans++;
+	           if(t.find(txt[i])!=t.end()){
+    	           t[txt[i]]++;
+	           if(t[txt[i]]==1)
+	            cnt++;
+	           }
+	            i++;
+	            j++;
+	       }
+
+
+
+
+	    }
+	    return ans;
+-------------------------------------------------------------------
+******************************************************************
+
+
+ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        ListNode* ans=new ListNode();
+        ListNode* temp=ans;
+        int carry=0;
+        while(l1!=NULL || l2!=NULL || carry){
+            int sum=0;
+            if(l1!=NULL){
+                sum+=l1->val;
+                l1=l1->next;
+            }
+            if(l2!=NULL){
+                sum+=l2->val;
+                l2=l2->next;
+            }
+            sum += carry;
+            int rem=sum%10;
+            carry=sum/10;
+            ans->next=new ListNode(rem);
+            ans=ans->next;
+        }
+        return temp->next;
+    }
+
+----------------------------------------------
+
+***********************************************************************
+sort(ans.begin(),ans.end());
+        ans.erase( unique( ans.begin(), ans.end() ), ans.end() );
+        return ans;
+
+Here unique(v.beg(),v.end()) will remove all adjacent duplicates for that vector  need to be sorted
+and unique retur nan iterator of end of the vector where thr vector will end 
+and the erase will eras the empty spaces from unique end to actula vector end....
+***********------------------------------------***************************
+8***************************************************************************
+
+
+
+
+---------------------------------------------------------------
+****************************************************************
+Original two pointer concept  close to the target;
+
+for(i=0;i<n;i++)
+        {
+            int j=i+1;
+            int k=n-1;
+            while(j<k)
+            {
+                int x=v[i]+v[j]+v[k];
+                 if(x==target)
+                     return x;
+                 
+                if(abs(target-x)<mini)
+                {
+                    mini=abs(target-x);
+                    ans=x;
+                }
+                else if(x<target)
+                    j++;
+                else
+                    k--;
+                
+            }
+        }
+
+_________________________________________________________________________________
+**********************************************************************************
+NOTE : -
+built-in function which evaluates strings as mathematical expressions, such as eval()
+---------------------------------------------------------------------------------------
+
+
+
+-----------------------------------------------------------------------------------
+*************************************************************************************
+
+--****Get state of string function by bit manipulation *****------------------------
+int getstate(string s)
+    {
+        int state=0;
+        for(char c:s)
+        {
+            int ind=c-'a';
+            state |=1<<(ind);
+        }
+        return state;
+    }
+**************************************************************************************
+-------------------------------------------------------------------------------------
+
+
+
+
+
+
+---------------------------------------------------------------------------------
+*********************************************************************************
+			STANDARD VARIATION OF STACK PROBLEM
+
+
+vector <int> calculateSpan(int v[], int n)
+    {
+       vector<int>ans;
+       int i,k;
+       stack<pair<int,int>>s;
+       for(i=0;i<n;i++)
+       {
+            if(s.empty())
+                ans.push_back(1);
+            else if(s.top().first>v[i])
+                ans.push_back(1);
+            else
+            {
+                while(!s.empty() && s.top().first<=v[i])
+                    s.pop();
+                if(s.empty())
+                    ans.push_back(i+1);
+                else
+                ans.push_back(i-s.top().second);
+            }
+            s.push({v[i],i});
+       }
+       return ans;
+    }
+
+----------------------------------------------------------------------------------
+***********************************************************************************
+
+
+--------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+
+Combination of DFS and BFS on MATRIX
+v.important
+
+class Solution {
+public:
+     bool vis[101][101];
+    void dfs(queue<pair<int,int>>&q,int i,int j,vector<vector<int>>& v,int m,int n)
+    {
+        q.push({i,j});
+        vis[i][j]=true;
+        int dx[4]={0,0,1,-1};
+        int dy[4]={-1,1,0,0};
+        for(int k=0;k<4;k++)
+        {
+            int px=i+dx[k];
+            int py=j+dy[k];
+            if(px<0 || py<0 || px>=m || py>=n ||vis[px][py]==true|| v[px][py]==0)
+                continue;
+            dfs(q,px,py,v,m,n);
+        }
+    }
+    int shortestBridge(vector<vector<int>>& v) {
+        int m=v.size();
+        int n=v[0].size();
+        queue<pair<int,int>>q;
+         for(int i=0;i<m;i++)
+        {
+            for(int j=0;j<n;j++)
+                vis[i][j]=false;
+        }
+        int flg=0,i,j;
+        for(i=0;i<m && flg==0;i++)
+        {
+            for( j=0;j<n && flg==0;j++)
+            {
+                if(v[i][j]==1){
+                    flg=1;
+                     dfs(q,i,j,v,m,n);
+                }
+            }
+        }
+    
+        int level=-1;
+        int dx[4]={0,0,1,-1};
+        int dy[4]={-1,1,0,0};
+      
+        while(!q.empty())
+        {
+            int s=q.size();
+            level++;
+            while(s-->0)
+            {
+                int x=q.front().first;
+                int y=q.front().second;
+                q.pop();
+                for(int i=0;i<4;i++)
+                {
+                    int px=x+dx[i];
+                    int py=y+dy[i];
+                    if(px<0 || py<0 || px>=m || py>=n ||vis[px][py]==true)
+                        continue;
+                    if(v[px][py]==1)
+                        return level;
+                      vis[px][py]=true;
+                    q.push({px,py});
+                }
+            }
+        }
+        return level;
+    }
+};
+
+-----------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------
