@@ -132,6 +132,25 @@ To print all subsequence in given array
 -------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------
+TO get all the even numbers of vector on left side of vector  and odd numbers in right side in 
+O(1) space and O(N) time complexity
+
+ vector<int> sortArrayByParity(vector<int>& v) {
+        int n=v.size(),j=0;
+        for(int i=0;i<n;i++)
+        {
+            if(v[i]%2==0)
+            {
+                swap(v[i],v[j]);
+                j++;
+            }
+        }
+       return v;
+    }
+
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
 Knapsack question  to take it or not to take it
 // #include <bits/stdc++.h>
 int maxi=INT_MIN;
