@@ -147,6 +147,38 @@ O(1) space and O(N) time complexity
         }
        return v;
     }
+---------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
+
+LINKED LIST To be remember
+
+1. Reverse a linked list concept
+2. Using two pointers concept we can get the middle concept
+3. without reversing the linked list we can delet the nth node from last.. see below code
+
+ ListNode* removeNthFromEnd(ListNode* head, int n) {
+        ListNode *s=head,*f=head;
+        int cnt=0;
+        while(cnt<n)
+        {
+            cnt++;
+            f=f->next;
+        }
+        if(f==NULL)
+        {
+            head=head->next;
+            return head;
+        }
+        while(f->next!=NULL)
+        {
+            f=f->next;
+            s=s->next;
+        }
+        s->next=s->next->next;
+        return head;
+    }
+
 
 ---------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------
