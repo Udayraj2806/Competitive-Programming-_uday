@@ -23,7 +23,9 @@ int main()
 	cin>>t;
 	while(t--)
 	{
-		cout<<solve()<<"\n";
+		solve();
+        cout<<"\n";
+
 	}
 	return 0;
 }

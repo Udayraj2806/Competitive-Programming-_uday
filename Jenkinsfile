@@ -13,6 +13,9 @@ pipeline {
             steps {
                 echo "Testing.."
                 bat '''
+                    git clone https://github.com/Udayraj2806/Competitive-Programming-_uday.git
+                '''
+                 bat '''
                     git status
                 '''
             }
