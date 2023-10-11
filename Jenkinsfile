@@ -13,8 +13,12 @@ pipeline {
             steps {
                 echo "Testing.."
                 bat '''
-                    docker --version
+                   git clone https://github.com/Udayraj2806/TestAutomationFrameworkForGithubUsersProject.git
                 '''
+                 bat '''
+                    mvn clean test
+                '''
+
                 
             }
         }
