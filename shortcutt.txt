@@ -23,13 +23,14 @@ int main()
 	cin>>t;
 	while(t--)
 	{
-		solve();
-        cout<<"\n";
-
+		cout<<solve()<<"\n";
 	}
 	return 0;
 }
 
+--------
+This will give the total number of set bits in 5
+int t=__builtin_popcount(5);
 
 ---------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------
@@ -91,6 +92,19 @@ this method
         }
         return grid;
     }
+
+-----------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------
+left("uday",1) //this will return left 1 character
+right("uday",2) //this will return right 2 character that is "ay"
+
+round(3.784,2) //this will round to two digita after 3.784 o/p=3.78
+
+floor(3.4)   //output=3
+ceil(3.4)   ///output=4
+
+truncate(3.454654,4)   //this will truncate the number 4 digits after decimal
 -----------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------
@@ -131,71 +145,18 @@ To print all subsequence in given array
         return false;
     }
 
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+Bit Manipulation 
+
+To get number of set bits
+1.brain_kerninghan method to get the number of set bits
+2.just right-shift n to decrease the number (its simila t divsion the numer by n)
+
 -------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------
-TO get all the even numbers of vector on left side of vector  and odd numbers in right side in 
-O(1) space and O(N) time complexity
-
- vector<int> sortArrayByParity(vector<int>& v) {
-        int n=v.size(),j=0;
-        for(int i=0;i<n;i++)
-        {
-            if(v[i]%2==0)
-            {
-                swap(v[i],v[j]);
-                j++;
-            }
-        }
-       return v;
-    }
----------------------------------------------------------------------------------------
-----------------------------------------------------------------------------------------
--------------------------------------------------------------------------------------
-
-LINKED LIST To be remember
-
-1. Reverse a linked list concept
-2. Using two pointers concept we can get the middle concept
-3. without reversing the linked list we can delet the nth node from last.. see below code
-
- ListNode* removeNthFromEnd(ListNode* head, int n) {
-        ListNode *s=head,*f=head;
-        int cnt=0;
-        while(cnt<n)
-        {
-            cnt++;
-            f=f->next;
-        }
-        if(f==NULL)
-        {
-            head=head->next;
-            return head;
-        }
-        while(f->next!=NULL)
-        {
-            f=f->next;
-            s=s->next;
-        }
-        s->next=s->next->next;
-        return head;
-    }
-
----------------------------------------------------------------------------------------
----------------------------------------------------------------------------------------
----------------------------------------------------------------------------------------
-
-Bit Manipulation Concept 
-
-1.instead of dividing n by 2(n/2) we can do n>>1
-eg.  1001=9
-     9/2=4
-     9>>1=100=4
-     
-
----------------------------------------------------------------------------------------
----------------------------------------------------------------------------------------
----------------------------------------------------------------------------------------
 Knapsack question  to take it or not to take it
 // #include <bits/stdc++.h>
 int maxi=INT_MIN;
@@ -234,37 +195,6 @@ int knapsack(vector<int> weight, vector<int> value, int n, int maxWeight)
     }
 // 	return func(n-1,weight,value,t,maxWeight);
 }
------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------
-Graph coloring concept to check weather the graph is Bipartite or not
-
- bool isval(vector<vector<int>>& v,vector<int>&freq,int c,int i)
-    {
-        if(freq[i]!=0)
-            return freq[i]==c;
-        freq[i]=c;
-        for( int n=0;n<v[i].size();n++)
-        {
-            if(!isval(v,freq,-c,v[i][n]))
-                return false;
-        }
-        return true;
-    }
-    bool isBipartite(vector<vector<int>>& v) {
-        int n=v.size();
-        vector<int>freq(n,0);
-       
-        for(int i=0;i<n;i++)
-        {
-            if(freq[i]==0 && !isval(v,freq,1,i))
-                return false;
-        }
-        return true;
-        
-    }
-    
-    
 -----------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------
@@ -335,9 +265,248 @@ int prnt[202];
         }
     }
 
+
+-------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+------------------------Print All Subsequence--------------------------------------------------------------
+
+ #include <bits/stdc++.h>
+using namespace std;
+ 
+// Find all subsequences in recursion
+void printSubsequence(string input, string output)
+{
+    if (input.empty()) {
+        cout << output << endl;
+        return;
+    }
+    printSubsequence(input.substr(1), output + input[0]);
+    printSubsequence(input.substr(1), output);
+}
+ 
+int main()
+{
+   
+    string output = "";
+    string input = "abcd";
+    printSubsequence(input, output);
+ 
+    return 0;
+}
+
+-----------------------------------------------------------------------------------
+----------------------------------------------------------------------------------
+----------Insertion Sort------------------------------------------------------------------------
+
+vector<int> sortArray(vector<int>& v) {
+        int n=v.size();
+       for(int i=0;i<n;i++)
+       {
+           int mini=v[i];
+           int flg=0;
+           int j;
+           for(j=i-1;j>=0;j--)
+           {
+              if(v[j]>mini){
+                  flg=1;
+                 v[j+1]=v[j];
+              }
+               else
+                   break;
+           }
+           if(flg)
+               v[j+1]=mini;
+       }
+        return v;
+    }
 ------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------
+
+
+-----------------------------------------------------------------------------------
+----------------------------------------------------------------------------------
+----------Bubble Sort------------------------------------------------------------------------
+
+   vector<int> sortArray(vector<int>& v) {
+        int n=v.size();
+       for(int i=0;i<n;i++)
+       {
+           int flg=0;
+           int j;
+           for(j=1;j<n;j++)
+           {
+              if(v[j-1]>v[j]){
+                  flg=1;
+                 swap(v[j],v[j-1]);
+              }
+              
+           }
+           if(flg==0)
+               return v;
+       }
+        return v;
+    }
+------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+
+
+
+-----------------------------------------------------------------------------------
+----------------------------------------------------------------------------------
+----------Selection Sort------------------------------------------------------------------------
+
+  vector<int> sortArray(vector<int>& v) {
+        int n=v.size();
+       for(int i=0;i<n;i++)
+       {
+           int mini=v[i];
+           int pos=i;
+           int j;
+           for(j=i;j<n;j++)
+           {
+                if(v[j]<mini)
+		        {
+		            mini=v[j];
+		            pos=j;
+		        }
+            }
+           swap(v[i],v[pos]);
+       }
+        return v;
+    }
+------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+
+
+-----------------------------------------------------------------------------------
+----------------------------------------------------------------------------------
+----------Quick Sort------------------------------------------------------------------------
+int partition(int l,int h,vector<int>&v)
+    {
+        int p=v[h];
+        int i=l-1;
+       for(int j=l;j<h;j++)
+       {
+           if(v[j]<p)
+           {
+               i++;
+               swap(v[i],v[j]);
+           }
+       }
+        i++;
+        swap(v[i],v[h]);
+        return i;
+    }
+    void quick(int i,int j,vector<int>&v)
+    {
+        if(i<j){
+        int k=partition(i,j,v);
+        quick(i,k-1,v);
+        quick(k+1,j,v);
+        }
+    }
+    vector<int> sortArray(vector<int>& v) {
+        int n=v.size();
+        quick(0,n-1,v); 
+        return v;
+    }
+------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+
+
+
+-----------------------------------------------------------------------------------
+----------------------------------------------------------------------------------
+----------Heap Sort------------------------------------------------------------------------
+void hepify(int i,int n,vector<int>&v)
+    {
+        int lar=i;
+        int l=2*i+1;
+        int r=2*i+2;
+        if(l<n && v[l]>v[lar])
+            lar=l;
+         if(r<n && v[r]>v[lar])
+            lar=r;
+        if(lar!=i){
+            swap(v[i],v[lar]);
+            hepify(lar,n,v);
+        }
+    }
+   
+    vector<int> sortArray(vector<int>& v) {
+        int n=v.size();
+       for(int i=n/2-1;i>=0;i--)
+           hepify(i,n,v);
+        for(int i=n-1;i>0;i--)
+        {
+            swap(v[0],v[i]);
+            hepify(0,i,v);
+        }
+        return v;
+    }
+------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+
+
+
+-----------------------------------------------------------------------------------
+----------------------------------------------------------------------------------
+----------Merge Sort------------------------------------------------------------------------
+
+    void merge(int i,int mid,int j,vector<int>&v)
+    {
+        int id1=i;
+        int id2=mid+1;
+        
+        vector<int>v1(j-i+1);
+        int x=0;
+        while(id1<=mid && id2<=j)
+        {
+            if(v[id1]<=v[id2])
+            {
+                v1[x++]=v[id1++];
+            }
+            else
+            {
+                v1[x++]=v[id2++];
+            }
+        }
+        while(id1<=mid)
+            v1[x++]=v[id1++];
+        while(id2<=j)
+        {
+            v1[x++]=v[id2++];
+        }
+        int p=i;
+        for(int k=0;k<v1.size();k++)
+        {
+            v[p++]=v1[k];
+        }
+    }
+   void divide(int i,int j,vector<int>&v)
+   {
+       if(i>=j)
+           return;
+       int mid=i+(j-i)/2;
+       divide(i,mid,v);
+       divide(mid+1,j,v);
+       merge(i,mid,j,v);
+   }
+   
+    vector<int> sortArray(vector<int>& v) {
+        int i=0,j=v.size()-1;
+        divide(i,j,v);
+        return v;
+    }
+------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+
 Prefix sum and Hash concept to calculate the subarray sum...
 
 
@@ -396,6 +565,9 @@ public:
             return true;
     }
 };
+
+-----------------------------------------------
+
 
 ------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
@@ -652,6 +824,11 @@ ll mul(ll a,ll b){
 ll add(ll a,ll b){
 	return mod(mod(a)+mod(b));
 }
+
+a/b%m = (a*(b)^m-2)%m   where m is a prim number
+
+A^b %m = when A is greater then b so ans is = (A*A*A*A..)%m
+	if b is greater then A then so ans is = (A^(b%(m-1)))
 -----------------------------------------------------------------
 *************************************************************************
 
@@ -1429,4 +1606,123 @@ public:
 
 -----------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------
------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+---
+
+
+---------Trie Datastructure----------------------------------------------
+IMPLEMENTATION OF TRIE DATA STRUCTURE
+
+class Node
+{
+  public:
+    Node *link[26];
+    bool flg;
+    
+   
+    bool contain(char ch)
+    {
+        return link[ch-'a']!=NULL;
+    }
+    void put(char ch,Node *node)
+    {
+        link[ch-'a']=node;
+    }
+     Node * get(char ch)
+     {
+         return link[ch-'a'];
+     }
+    void setEnd()
+    {
+        flg=true;
+    }
+    bool isEnd()
+    {
+        return flg;
+    }
+};
+class Trie {
+
+public:
+
+    /** Initialize your data structure here. */
+    Node * root;
+    Trie() {
+        root=new Node();
+    }
+    
+    void insert(string s) {
+        Node *a=root;
+        for(int i=0;i<s.size();i++)
+        {
+            if(!a->contain(s[i]))
+                a->put(s[i],new Node());
+            a=a->get(s[i]);
+        }
+        a->setEnd();
+    }
+    
+    bool search(string s) {
+        Node *a=root;
+        for(int i=0;i<s.size();i++)
+        {
+            if(!a->contain(s[i]))
+                return false;
+            a=a->get(s[i]);
+        }
+        return a->isEnd();
+    }
+    
+    bool startsWith(string s) {
+        Node *a=root;
+        for(int i=0;i<s.size();i++)
+        {
+            if(!a->contain(s[i]))
+                return false;
+            a=a->get(s[i]);
+        }
+        return true;
+    }
+
+};
+
+
+-------------------------------------------------------------------
+			KMP pattern matching algorithm 
+
+
+ vector <int> search(string pat, string txt)
+        {
+            int psi=pat.size();
+
+	//----------This is the code for generation of LPS ------------//
+            string s=pat+"#"+txt;
+            vector<int>lps(s.size(),0);
+            int i=1,len=0;
+            while(i<s.size()){
+                if(s[i]==s[len]){
+                    len++;
+                    lps[i]=len;
+                    i++;
+                }
+                else{
+                    if(len>0){
+                        len=lps[len-1];
+                    }
+                    else{
+                        lps[i]=0;
+                        i++;
+                    }
+                }
+            }
+
+	//------------end of LPS generation code--------//
+            vector<int>ans;
+            for(int i=0;i<s.size();i++){
+                if(lps[i]==pat.size()){
+                    ans.push_back(i-lps[i]+1-pat.size());
+                }
+            }
+            return ans;
+        }
+--------------------------------------------------------------------------------------------------
